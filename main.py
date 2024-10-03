@@ -35,14 +35,17 @@ class StartScreen:
         pygame.draw.rect(self.window, (39, 145, 39), (rect_x, rect_y, rect_width, rect_height)) #Draws the rectangle around the text.
         self.window.blit(self.start_text, start_text_rect.topleft) #Draws the start text on the window.
         pygame.display.update() #Updates the window to show the changes.
+        self.start_button_rect = pygame.Rect(rect_x, rect_y, rect_width, rect_height) #We store the rectangle in a variable to check for clicks later.
 
     def check_for_click(self):
         for event in pygame.event.get(): #Here we are checking for "events". Events are things like mouse clicks, key presses, etc.
             if event.type == pygame.QUIT: #This branch detects if the user clicks the X button. Very important or you literally cant close the game.
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN: #This branch just checks for a mouse click, will change later so they have to click the box.
-                return True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos() #Getting the pos of the mouse. 
+                if self.start_button_rect.collidepoint(mouse_pos): #Checks to see if the mouse clicked on the coordinates of the start button.
+                    return True
         return False #If no events are detected, the function returns false.
 
 #Class for the main game screen. Handles rendering aswell. 
